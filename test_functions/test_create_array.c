@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 16:21:18 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/24 17:07:45 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/24 17:39:47 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	test_answers(char **commands, char **expected_results);
 
 void	display_open_error_msg(void)
 {
-	ft_putendl("open() failed");
+	ft_putendl_fd("\topen() failed", 2);
+	ft_putendl_fd("end of unit tests", 2);
 	exit(EXIT_FAILURE);
 }
 
