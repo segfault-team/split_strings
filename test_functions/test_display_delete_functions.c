@@ -6,14 +6,19 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 16:24:27 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/24 16:25:16 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/24 17:09:25 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "../libft/libft.h"
 #include <stdio.h> //to_delete
 
 char	**split_delim(char *cmd, char *redirection);
+int		check_wrong_answers(char **to_test, char **good_answers);
+void	test_answers(char **commands, char **expected_results);
+size_t	get_file_line_number(char *file);
+char	**copy_lines_in_file(int fd, char **array);
+char	**create_array_from_file(char *file);
 
 void	print_char_array(char **target)
 {

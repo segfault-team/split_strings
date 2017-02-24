@@ -6,11 +6,11 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 16:20:33 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/24 16:28:41 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/24 17:19:22 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "../libft/libft.h"
 #include <stdio.h> //to_delete
 #include <fcntl.h>
 
@@ -30,8 +30,8 @@ int		main(void)
 	char	**expected_results;
 
 	ft_putendl("start unit tests");
-	commands = create_array_from_file("commands.txt");
-	expected_results = create_array_from_file("expected_results.txt");
+	commands = create_array_from_file("test_functions/test_texts/commands.txt");
+	expected_results = create_array_from_file("test_functions/test_texts/expected_results.txt");
 	test_answers(commands, expected_results);
 	delete_both_arrays(&commands, &expected_results);
 	ft_putendl("end unit tests");

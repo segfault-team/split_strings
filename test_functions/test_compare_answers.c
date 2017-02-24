@@ -6,16 +6,21 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 16:27:21 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/24 16:35:34 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/24 17:08:54 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "../libft/libft.h"
 #include <stdio.h> //to_delete
 #include <fcntl.h>
 
+char	**split_delim(char *cmd, char *redirection);
+void	print_char_array(char **target);
 void	delete_both_arrays(char ***ar1, char ***ar2);
 void	display_mistake(char **to_test, char **good_answers);
+size_t	get_file_line_number(char *file);
+char	**copy_lines_in_file(int fd, char **array);
+char	**create_array_from_file(char *file);
 
 int		check_wrong_answers(char **to_test, char **good_answers)
 {
@@ -43,8 +48,8 @@ void	test_answers(char **commands, char **expected_results)
 	while (commands[i] && expected_results[i])
 	{
 		printf("test %d : [%s]\n", i + 1, commands[i]);
-		to_test = split_delim(commands[i], "|<>&");
-		//to_test = ft_strsplit("la vie est belle", ' ');
+		//to_test = split_delim(commands[i], "|<>&");
+		to_test = ft_strsplit("la vie est belle", ' ');
 		good_answers = ft_strsplit(expected_results[i], '^');
 		if (check_wrong_answers(to_test, good_answers))
 			display_mistake(to_test, good_answers);

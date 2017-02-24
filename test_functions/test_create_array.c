@@ -6,12 +6,25 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 16:21:18 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/24 16:21:57 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/24 17:07:45 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "../libft/libft.h"
 #include <fcntl.h>
+
+char	**split_delim(char *cmd, char *redirection);
+void	print_char_array(char **target);
+void	delete_both_arrays(char ***ar1, char ***ar2);
+void	display_mistake(char **to_test, char **good_answers);
+int		check_wrong_answers(char **to_test, char **good_answers);
+void	test_answers(char **commands, char **expected_results);
+
+void	display_open_error_msg(void)
+{
+	ft_putendl("open() failed");
+	exit(EXIT_FAILURE);
+}
 
 size_t	get_file_line_number(char *file)
 {
@@ -21,7 +34,7 @@ size_t	get_file_line_number(char *file)
 
 	size = 0;
 	if ((fd = open(file, O_RDONLY)) == -1)
-		exit(EXIT_FAILURE);
+		display_open_error_msg();
 	while (get_next_line(fd, &line))
 	{
 		ft_strdel(&line);
@@ -53,7 +66,7 @@ char	**create_array_from_file(char *file)
 
 	size = get_file_line_number(file);
 	if ((fd = open(file, O_RDONLY)) == -1)
-		exit(EXIT_FAILURE);
+		display_open_error_msg();
 	if (!(array = (char **)malloc(sizeof(char *) * size + 1)))
 		return (NULL);
 	array = copy_lines_in_file(fd, array);
