@@ -6,11 +6,12 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:20:55 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/24 14:05:27 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/24 14:36:38 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft/libft.h"
+#include <stdio.h> //to_delete
 #define SIZE 9
 
 char	**split_delim(char *cmd, char *redirection);
@@ -31,10 +32,10 @@ void	print_char_array(char **target)
 	ft_putendl("*******");
 }
 
-void	delete_both_arrays(char **ar1, char **ar2)
+void	delete_both_arrays(char ***ar1, char ***ar2)
 {
-	erase_char_array(a1);
-	erase_char_array(a2);
+	erase_char_array(*ar1);
+	erase_char_array(*ar2);
 }
 
 void	display_mistake(char **to_test, char **good_answers)
@@ -50,14 +51,28 @@ int		check_wrong_answers(char **to_test, char **good_answers)
 	int		i;
 
 	i = 0;
+	ft_putendl("\t\tstart check_wrong_answers()");
+	//print_char_array(to_test);
+	//print_char_array(good_answers);
 	while (to_test[i] || good_answers[i])
 	{
-		if (ft_strcmp(to_test[i], good_answer[i]))
+		ft_putendl("\t\ttop loop");
+		if (ft_strcmp(to_test[i], good_answers[i]))
+		{
+			ft_putendl("\t\tmauvaise reponse");
+			ft_putendl("\t\tend check_wrong_answers()");
 			return (1);
+		}
 		i++;
 	}
 	if (to_test[i] || good_answers[i])
+	{
+		ft_putendl("\t\tmauvaise reponse");
+		ft_putendl("\t\tend check_wrong_answers()");
 		return (1);
+	}
+	ft_putendl("\t\tbonne reponse");
+	ft_putendl("\t\tend check_wrong_answers()");
 	return (0);
 }
 
@@ -68,25 +83,37 @@ void	test_answers(char **commands, char **expected_results)
 	char	**good_answers;
 
 	i = 0;
+	ft_putendl("\tstart test_answers()");
+	print_char_array(commands);
+	print_char_array(expected_results);
 	while (commands[i] && expected_results[i])
 	{
-		printf("test %d : ", i + 1);
+		printf("test %d :\n", i + 1);
 		to_test = split_delim(commands[i], "|<>&");
-		good_answers = ft_strsplit(expected_results, '^');
-		if (check_wrong_results(to_tests, expected_results[i]))
-			display_mistake(to_tests, expected_results[i]);
+		ft_putendl("\tsplit_delim() ok");
+		good_answers = ft_strsplit(expected_results[i], '^');
+		ft_putendl("\tft_strsplit() ok");
+		if (check_wrong_answers(to_test, good_answers))
+		{
+			ft_putendl("\tcheck_wrong_answers() ok");
+			display_mistake(to_test, good_answers);
+			ft_putendl("\tdisplay_mistake() ok");
+		}
 		else
+		{
+			ft_putendl("\telse ok");
 			printf("ok\n");
-		erase_char_array(good_answers);
+		}
+		delete_both_arrays(&to_test, &good_answers);
+		ft_putendl("\tdelete_both_arrays() ok");
 		i++;
 	}
-	erase_char_array(to_test);
+	ft_putendl("\tend test_answers()");
 }
 
 char	**create_expected_results(void)
 {
 	char	**expected_results;
-	size_t	size;
 
 	if (!(expected_results = (char **)malloc(sizeof(char *) * SIZE)))
 		return (NULL);
@@ -105,7 +132,6 @@ char	**create_expected_results(void)
 char	**create_commands(void)
 {
 	char	**commands;
-	size_t	size;
 
 	if (!(commands = (char **)malloc(sizeof(char *) * SIZE)))
 		return (NULL);
@@ -118,7 +144,7 @@ char	**create_commands(void)
 	commands[6] = strdup("ls -l|wc -c -l|cat -e>file>>file2");
 	commands[7] = strdup("ls -l&&wc -c|| cat2>&1file");
 	commands[8] = NULL;
-	return (commandss);
+	return (commands);
 }
 
 int		main(void)
@@ -126,9 +152,15 @@ int		main(void)
 	char	**commands;
 	char	**expected_results;
 
+	ft_putendl("start unit tests");
 	commands = create_commands();
+	ft_putendl("create_commands() ok");
 	expected_results = create_expected_results();
+	ft_putendl("create_expected_results() ok");
 	test_answers(commands, expected_results);
-	delete_both_arrays(commands, expected_results);
+	ft_putendl("test_answers() ok");
+	delete_both_arrays(&commands, &expected_results);
+	ft_putendl("delete_both_arrays() ok");
+	ft_putendl("end unit tests");
 	return (0);
 }
