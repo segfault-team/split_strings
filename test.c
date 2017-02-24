@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:20:55 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/24 13:06:30 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/24 13:33:04 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,30 @@
 #include <unistd.h>
 
 char	**split_delim(char *cmd, char *redirection);
+
+char	*go_to_next_circumflex(char *line)
+{
+	char	*next;
+
+	next = strchr(line, '^')
+	return (next);
+}
+
+int		check_wrong_answers(char **to_test, char *expected_results)
+{
+	int		i;
+	char	*good_answer;
+
+	i = 0;
+	while (to_test[i])
+	{
+		good_answer = go_to_next_circumflex(expected_result);
+		if (ft_strcmp(to_test[i], good_answer))
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 void	test_answers(char **commands, char **expected_results)
 {
