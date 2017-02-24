@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:20:55 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/24 13:51:11 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/24 14:05:27 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,49 @@
 
 char	**split_delim(char *cmd, char *redirection);
 
-int		check_wrong_answers(char **to_test, char *expected_results)
+void	print_char_array(char **target)
 {
 	int		i;
-	char	**good_answers;
 
 	i = 0;
-	good_answers = ft_strsplit(expected_results, '^');
+	ft_putendl("*******");
+	while (target[i])
+	{
+		ft_putchar('[');
+		ft_putstr(target[i]);
+		ft_putendl("]");
+		i++;
+	}
+	ft_putendl("*******");
+}
+
+void	delete_both_arrays(char **ar1, char **ar2)
+{
+	erase_char_array(a1);
+	erase_char_array(a2);
+}
+
+void	display_mistake(char **to_test, char **good_answers)
+{
+	printf("failed\nYour answer :\n");
+	print_char_array(to_test);
+	printf("Expected answer :\n");
+	print_char_array(good_answers);
+}
+
+int		check_wrong_answers(char **to_test, char **good_answers)
+{
+	int		i;
+
+	i = 0;
 	while (to_test[i] || good_answers[i])
 	{
 		if (ft_strcmp(to_test[i], good_answer[i]))
-		{
-			erase_char_array(good_answers);
 			return (1);
-		}
 		i++;
 	}
 	if (to_test[i] || good_answers[i])
-	{
-		erase_char_array(good_answers);
 		return (1);
-	}
-	erase_char_array(good_answers);
 	return (0);
 }
 
@@ -44,15 +65,19 @@ void	test_answers(char **commands, char **expected_results)
 {
 	int		i;
 	char	**to_test;
+	char	**good_answers;
 
 	i = 0;
 	while (commands[i] && expected_results[i])
 	{
+		printf("test %d : ", i + 1);
 		to_test = split_delim(commands[i], "|<>&");
+		good_answers = ft_strsplit(expected_results, '^');
 		if (check_wrong_results(to_tests, expected_results[i]))
 			display_mistake(to_tests, expected_results[i]);
 		else
 			printf("ok\n");
+		erase_char_array(good_answers);
 		i++;
 	}
 	erase_char_array(to_test);
