@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:20:55 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/24 14:36:38 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/24 15:13:21 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	print_char_array(char **target)
 	int		i;
 
 	i = 0;
+	if (!target)
+		return ;
 	ft_putendl("*******");
 	while (target[i])
 	{
@@ -51,28 +53,14 @@ int		check_wrong_answers(char **to_test, char **good_answers)
 	int		i;
 
 	i = 0;
-	ft_putendl("\t\tstart check_wrong_answers()");
-	//print_char_array(to_test);
-	//print_char_array(good_answers);
 	while (to_test[i] || good_answers[i])
 	{
-		ft_putendl("\t\ttop loop");
 		if (ft_strcmp(to_test[i], good_answers[i]))
-		{
-			ft_putendl("\t\tmauvaise reponse");
-			ft_putendl("\t\tend check_wrong_answers()");
 			return (1);
-		}
 		i++;
 	}
 	if (to_test[i] || good_answers[i])
-	{
-		ft_putendl("\t\tmauvaise reponse");
-		ft_putendl("\t\tend check_wrong_answers()");
 		return (1);
-	}
-	ft_putendl("\t\tbonne reponse");
-	ft_putendl("\t\tend check_wrong_answers()");
 	return (0);
 }
 
@@ -83,32 +71,18 @@ void	test_answers(char **commands, char **expected_results)
 	char	**good_answers;
 
 	i = 0;
-	ft_putendl("\tstart test_answers()");
-	print_char_array(commands);
-	print_char_array(expected_results);
 	while (commands[i] && expected_results[i])
 	{
-		printf("test %d :\n", i + 1);
+		printf("test %d : [%s]\n", i + 1, commands[i]);
 		to_test = split_delim(commands[i], "|<>&");
-		ft_putendl("\tsplit_delim() ok");
 		good_answers = ft_strsplit(expected_results[i], '^');
-		ft_putendl("\tft_strsplit() ok");
 		if (check_wrong_answers(to_test, good_answers))
-		{
-			ft_putendl("\tcheck_wrong_answers() ok");
 			display_mistake(to_test, good_answers);
-			ft_putendl("\tdisplay_mistake() ok");
-		}
 		else
-		{
-			ft_putendl("\telse ok");
 			printf("ok\n");
-		}
 		delete_both_arrays(&to_test, &good_answers);
-		ft_putendl("\tdelete_both_arrays() ok");
 		i++;
 	}
-	ft_putendl("\tend test_answers()");
 }
 
 char	**create_expected_results(void)
@@ -154,13 +128,9 @@ int		main(void)
 
 	ft_putendl("start unit tests");
 	commands = create_commands();
-	ft_putendl("create_commands() ok");
 	expected_results = create_expected_results();
-	ft_putendl("create_expected_results() ok");
 	test_answers(commands, expected_results);
-	ft_putendl("test_answers() ok");
 	delete_both_arrays(&commands, &expected_results);
-	ft_putendl("delete_both_arrays() ok");
 	ft_putendl("end unit tests");
 	return (0);
 }
