@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 16:27:21 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/24 16:32:32 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/24 16:35:34 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	test_answers(char **commands, char **expected_results)
 	while (commands[i] && expected_results[i])
 	{
 		printf("test %d : [%s]\n", i + 1, commands[i]);
-		//to_test = split_delim(commands[i], "|<>&");
-		to_test = ft_strsplit("la vie est belle", ' ');
+		to_test = split_delim(commands[i], "|<>&");
+		//to_test = ft_strsplit("la vie est belle", ' ');
 		good_answers = ft_strsplit(expected_results[i], '^');
 		if (check_wrong_answers(to_test, good_answers))
 			display_mistake(to_test, good_answers);
