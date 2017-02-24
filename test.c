@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:20:55 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/23 14:20:50 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/24 13:06:30 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,21 @@
 
 char	**split_delim(char *cmd, char *redirection);
 
-void	check_answers(char **tested_strings, char **expected_results)
+void	test_answers(char **commands, char **expected_results)
 {
+	int		i;
+	char	**to_test;
 
+	i = 0;
+	while (commands[i] && expected_results[i])
+	{
+		to_test = split_delim(commands[i], "|<>&");
+		if (check_wrong_results(to_tests, expected_results[i]))
+			display_mistake(to_tests, expected_results[i]);
+		else
+			printf("ok\n");
+		i++;
+	}
 }
 
 char	**create_expected_results(void)
@@ -28,7 +40,7 @@ char	**create_expected_results(void)
 	size_t	size;
 
 	size = 9;
-	if (!(expected_resultss = (char **)malloc(sizeof(char *) * size)))
+	if (!(expected_results = (char **)malloc(sizeof(char *) * size)))
 		return (NULL);
 	expected_results[0] = strdup("ls");
 	expected_results[1] = strdup("ls^-a");
@@ -42,33 +54,34 @@ char	**create_expected_results(void)
 	return (expected_results);
 }
 
-char	**create_tested_strings(void)
+char	**create_commands(void)
 {
-	char	**tested_strings;
+	char	**commands;
 	size_t	size;
 
 	size = 9;
-	if (!(tested_strings = (char **)malloc(sizeof(char *) * size)))
+	if (!(commands = (char **)malloc(sizeof(char *) * size)))
 		return (NULL);
-	tested_string[0] = strdup("ls");
-	tested_string[1] = strdup("ls -a");
-	tested_string[2] = strdup("ls -l | wc -c");
-	tested_string[3] = strdup("ls -l| wc -c");
-	tested_string[4] = strdup("ls -l|wc -c");
-	tested_string[5] = strdup("ls -l | wc -c -l | cat -e > file");
-	tested_string[6] = strdup("ls -l|wc -c -l|cat -e>file>>file2");
-	tested_string[7] = strdup("ls -l&&wc -c|| cat2>&1file");
-	tested_string[8] = NULL;
-	return (tested_strings);
+	commands[0] = strdup("ls");
+	commands[1] = strdup("ls -a");
+	commands[2] = strdup("ls -l | wc -c");
+	commands[3] = strdup("ls -l| wc -c");
+	commands[4] = strdup("ls -l|wc -c");
+	commands[5] = strdup("ls -l | wc -c -l | cat -e > file");
+	commands[6] = strdup("ls -l|wc -c -l|cat -e>file>>file2");
+	commands[7] = strdup("ls -l&&wc -c|| cat2>&1file");
+	commands[8] = NULL;
+	return (commandss);
 }
 
 int		main(void)
 {
-	char	**tested_strings;
+	char	**commands;
 	char	**expected_results;
 
-	tested_strings = create_tested_strings();
+	commands = create_commands();
 	expected_results = create_expected_results();
-	check_answers(tested_strings, expected_results);
+	test_answers(commands, expected_results);
+	delete_both_arrays(commands, expected_results);
 	return (0);
 }
