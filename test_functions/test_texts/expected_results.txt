@@ -5,4 +5,4 @@ ls^-l^|^wc^-c
 ls^-l^|^wc^-c
 ls^-l^|^wc^-c^-l^|^cat^-e^>^file
 ls^-l^|^wc^-c^-l^|^cat^-e^>^file^>>^file2
-ls^-l^&&^wc^-c^||^cat^2^>&^1^file
+ls^-l^&&^wc^-c^||^cat^2>&1^file
