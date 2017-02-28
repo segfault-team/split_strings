@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 16:20:33 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/24 17:19:22 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/28 15:19:21 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h> //to_delete
 #include <fcntl.h>
 
-char	**split_delim(char *cmd, char *redirection);
+char	**split_delim(char *cmd, char **delim);
 void	print_char_array(char **target);
 void	delete_both_arrays(char ***ar1, char ***ar2);
 void	display_mistake(char **to_test, char **good_answers);

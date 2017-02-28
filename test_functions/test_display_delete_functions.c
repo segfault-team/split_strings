@@ -6,14 +6,14 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 16:24:27 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/24 17:09:25 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/28 15:19:54 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include <stdio.h> //to_delete
 
-char	**split_delim(char *cmd, char *redirection);
+char	**split_delim(char *cmd, char **delim);
 int		check_wrong_answers(char **to_test, char **good_answers);
 void	test_answers(char **commands, char **expected_results);
 size_t	get_file_line_number(char *file);

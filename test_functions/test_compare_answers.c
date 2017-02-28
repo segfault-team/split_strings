@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 16:27:21 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/24 17:38:29 by ggane            ###   ########.fr       */
+/*   Updated: 2017/02/28 15:26:15 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h> //to_delete
 #include <fcntl.h>
 
-char	**split_delim(char *cmd, char *redirection);
+char	**split_delim(char *line, char **delim);
 void	print_char_array(char **target);
 void	delete_both_arrays(char ***ar1, char ***ar2);
 void	display_mistake(char **to_test, char **good_answers);
@@ -51,11 +51,12 @@ void	test_answers(char **commands, char **expected_results)
 	int		i;
 	char	**to_test;
 	char	**good_answers;
+	const char	*delim[] = {">>", " ", "<<", ">", "<", "||", "|", "&&", "&", NULL};
 
 	i = 0;
 	while (commands[i] && expected_results[i])
 	{
-		if (!(to_test = split_delim(commands[i], "|<>&")))
+		if (!(to_test = split_delim(commands[i], (char **)delim)))
 			display_split_delim_error_msg();
 		printf("test %d : [%s]\n", i + 1, commands[i]);
 		good_answers = ft_strsplit(expected_results[i], '^');
