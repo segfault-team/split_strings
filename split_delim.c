@@ -12,18 +12,12 @@
 
 #include "libft/libft.h"
 
-#define MAX_ARG 10
-#define SIZE 256
-
-const char *delim[] = {">>", " ", "<<", ">", "<", "||", "|", "&&", NULL};
-#define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
-
 static int counter_argument(char *line, char **delim)
 {
     int i = 0;
     int counter = 0;
     int must_increment = 0;
-
+    
     while(*line)
     {
         while(*line == ' ')
@@ -33,12 +27,13 @@ static int counter_argument(char *line, char **delim)
             if(strncmp(line, delim[i], (int)strlen(delim[i])) == 0)
             {
                 line = line + strlen(delim[i]);
-                counter++;
+                if(*line != delim[i][0])
+                    counter++;
                 break;
             }
             i++;
         }
-        while(ft_isalnum(*line) || *line == '-')
+        while(ft_isalnum(*line) || *line == '-' || (delim[i] && *line == delim[i][0]))
         {
             line++;
             must_increment = 1;
@@ -51,42 +46,36 @@ static int counter_argument(char *line, char **delim)
     return (counter);
 }
 
-#define BUFF_DUP 4096
-
-char *cut_word_by_delim(char **str, char **delim)
+static char *cut_word_by_delim(char **str, char **delim)
 {
-    char dup[BUFF_DUP];
-    int len = 0;
-
-    memset(dup, 0, BUFF_DUP);
-    while (1)
+    char *dup;
+    int len;
+    int i;
+    
+    i = 0;
+    len = 0;
+    while ((str[0]) && ((*str[0]) == ' '))
+        str[0]++;
+    while(delim[len])
     {
-        while ((str[0]) && ((*str[0]) == ' '))
-            str[0]++;
-        while (str[0][len] && (ft_isalnum(str[0][len]) || str[0][len] == '-'))
-            len++;
-        if(len > 0)
+        if(strncmp(str[0], delim[len], (int)strlen(delim[len])) == 0)
         {
-            strncpy(dup, str[0], len);
-            str[0] = str[0] + len;
-            return (strdup(dup));
-        }
-        len = 0;
-        while(delim[len])
-        {
-            if(strncmp(str[0], delim[len], (int)strlen(delim[len])) == 0)
+            if(((str[0][strlen(delim[len])]) != delim[len][0]))
             {
-                strncpy(dup, delim[len], strlen(delim[len]));
                 str[0] = str[0] + strlen(delim[len]);
-                return (strdup(dup));
+                return (ft_strsub(delim[len], 0, strlen(delim[len])));
             }
-            len++;
+            break;
         }
-        len = 0;
+        len++;
     }
-    return (NULL);
+    while (str[0][i] && ((ft_isalnum(str[0][i]) || str[0][i] == '-') ||
+                         (delim[len] && (str[0][i] == delim[len][0]))))
+        i++;
+    dup = ft_strsub(str[0], 0, i);
+    str[0] = str[0] + i;
+    return (dup);
 }
-
 
 /*
  * Function:  split_command(char *line, char **delim)
@@ -104,13 +93,13 @@ char *cut_word_by_delim(char **str, char **delim)
  *  returns: retourne un tableau 2d formatté
  */
 
-char **split_delim(char *line, char **delim)
+char **split_command(char *line, char **delim)
 {
-
+    
     int len_tab;
     char **formatted_array;
     int i;
-
+    
     len_tab = counter_argument(line, delim);
     formatted_array = (char **)malloc(sizeof(*formatted_array) * len_tab + 1);
     i = 0;
@@ -125,3 +114,4 @@ char **split_delim(char *line, char **delim)
     formatted_array[i] = NULL;
     return (formatted_array);
 }
+
