@@ -6,7 +6,7 @@
 /*   By: ggane <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 16:16:26 by ggane             #+#    #+#             */
-/*   Updated: 2017/02/28 20:05:22 by ggane            ###   ########.fr       */
+/*   Updated: 2017/03/01 15:58:46 by ggane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,31 @@ size_t	since_aggr(char *line, int i)
 {
 	size_t	nb;
 
-	nb = 0;	
+	nb = 0;
+	i += 2;
+	if (line[i + 1] == ' ')
+
 	return (nb);
 }
 
-void	parcours_spaces(size_t *nb, int *i, char *line)
+size_t	parcours_spaces(char sens, int *i)
 {
+	int		copy_i;
+	size_t	nb;
+	int		sign;
+
+	copy_i = *i;
+	nb = 0;
+	sign = 1;
+	if (sens == '-')
+		sign = -1;
+	while (line[copy_i] == ' ')
+	{
+		nb++;
+		copy_i = copy_i + sign;
+	}
+	*i = copy_i;
+	return (nb);
 }
 
 size_t	before_aggr(char *line, int i)
@@ -31,12 +50,7 @@ size_t	before_aggr(char *line, int i)
 	nb = 0;
 	space = 0;
 	if (line[i - 1] == ' ')
-		parcours_spaces(&nb, line, &i);
-	while (line[i - 1] == ' ')
-	{
-		i--;
-		nb++;
-	}
+		nb = parcours_spaces('-', &i);
 	while (i > 0)
 	{
 		if (line[i] == ' ')
