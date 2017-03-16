@@ -4,6 +4,7 @@
 ------
 ### char    **split_command(char       *line, char     **delim)
 ------
+Split la ligne de commande et l'insere dans un tableau 2d selon une serie de delimiteurs:
 
 ## Parametres
 **line**  - pour recuperer la ligne sur stdin (ne peut etre NULL)
