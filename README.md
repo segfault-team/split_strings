@@ -7,6 +7,7 @@
 
 ## Parametres
 **line**  - pour recuperer la ligne sur stdin (ne peut etre NULL)
+
 **delim** - tableau de deux dimensions devant se terminer par un element NULL ou 
             chaque case est un delimiteur!!!
 
