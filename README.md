@@ -2,7 +2,7 @@
 ###### Defini dans header<jensaisrien.h>
 
 ------
-#### char    **split_command(char       *line, char     **delim)
+>#### char    **split_command(char       *line, char     **delim)
 ------
 Split la ligne de commande et l'insere dans un tableau 2d selon une serie de delimiteurs:
 
