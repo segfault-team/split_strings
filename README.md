@@ -18,6 +18,8 @@ Retourne un tableau 2d formatté
 ```c
 #include <stdio.h>
 
+const char *delim[] = {">>", " ", "<<", ">", "<", "||", "|", "&&", NULL};
+
 int main(int ac, char **av)
 {
     char *line = "ls -a| wc -e>> file";
