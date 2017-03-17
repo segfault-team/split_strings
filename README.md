@@ -19,16 +19,16 @@ Retourne un tableau 2d formatté
 ```c
 #include <stdio.h>
 
-const char *delim[] = {">>", " ", "<<", ">", "<", "||", "|", "&&", NULL};
+const char *delim[] = {">>", "<<", ">", "<", "||", "|", "&&", "&>", ">&", NULL};
 
 int main(int ac, char **av)
 {
-    char *line = "ls -a| wc -e>> file";
+    char *line = "wc   -c   \"-c ||ls\" -l>file  &>fichier";
     char **spliter = split_command(line, (char **)delim);
     int i = 0;
     while (spliter[i])
     {
-        printf("%d.%s\t",i,spliter[i]);
+        printf("element : %d vaut %s\n",i,spliter[i]);
         i++;
     }
     return(0);
@@ -36,5 +36,6 @@ int main(int ac, char **av)
 ```
 Output:
 ```
-1.ls    2.-a    3.|     4.wc    5.-e    6.>>    7.file
+1.wc    2.-c    3."-c ||ls"     4.-l    5.>    6.file    7.&>      
+8.fichier
 ```
