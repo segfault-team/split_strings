@@ -1,5 +1,5 @@
 # split_command :shit:
->###### Defini dans header<jensaisrien.h>
+>###### Defini dans header<split_command.h>
 
 ------
 #### char    **split_command(char       *line, char     **delim)
@@ -17,7 +17,7 @@ Retourne un tableau 2d formatté
 
 ## Exemple
 ```c
-#include <stdio.h>
+#include <split_command.h>
 
 const char *delim[] = {">>", "<<", ">", "<", "||", "|", "&&", "&>", ">&", NULL};
 
