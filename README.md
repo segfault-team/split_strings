@@ -36,6 +36,5 @@ int main(int ac, char **av)
 ```
 Output:
 ```
-1.wc    2.-c    3."-c ||ls"     4.-l    5.>    6.file    7.&>      
-8.fichier
+1.wc    2.-c    3."-c ||ls"     4.-l    5.>    6.file    7.&>    8.fichier
 ```
