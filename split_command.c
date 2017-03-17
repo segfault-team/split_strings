@@ -130,16 +130,3 @@ char **split_command(char *line, char **delim)
     formatted_array[i] = NULL;
     return (formatted_array);
 }
-
-int main(int ac, char **av)
-{
-    char *line = "wc      \"-c ||ls\" -l>file  &>fichier";
-    char **spliter = split_command(line, (char **)delim);
-    int i = 0;
-    while (spliter[i])
-    {
-        printf("element : %d vaut %s\n",i,spliter[i]);
-        i++;
-    }
-    return(0);
-}
