@@ -10,7 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+const char *delim[] = {">>", "<<", ">", "<", "||", "|", "&&", "&>", ">&", NULL};
+
+#define DEBUG 1
+
+static int ft_isquote(int c)
+{
+    if(c == '\"')
+        return 1;
+    return 0;
+}
 
 static int counter_argument(char *line, char **delim)
 {
@@ -38,6 +47,18 @@ static int counter_argument(char *line, char **delim)
             line++;
             must_increment = 1;
         }
+        if(ft_isquote(*line))
+        {
+            must_increment = 1;
+            while(*line++)
+            {
+                if(*line == '\"')
+                {
+                    line++; //moche
+                    break;
+                }
+            }
+        }
         if(must_increment == 1)
             counter++;
         i = 0;
@@ -54,10 +75,21 @@ static char *cut_word_by_delim(char **str, char **delim)
     
     i = 0;
     len = 0;
+    
     while ((str[0]) && ((*str[0]) == ' '))
         str[0]++;
     while(delim[len])
     {
+        if(str[0][0] == '"')
+        {
+            i = 1;
+            while(str[0][i] != '"')
+                i++;
+            dup = str[0];
+            str[0] = str[0] + ++i;
+            return (ft_strsub(dup, 0, i));
+        }
+        
         if(strncmp(str[0], delim[len], (int)strlen(delim[len])) == 0)
         {
             if(((str[0][strlen(delim[len])]) != delim[len][0]))
@@ -76,22 +108,6 @@ static char *cut_word_by_delim(char **str, char **delim)
     str[0] = str[0] + i;
     return (dup);
 }
-
-/*
- * Function:  split_command(char *line, char **delim)
- * --------------------
- * Split la ligne de commande et l'insere dans un tableau 2d selon une serie de delimiteurs:
- *    exemple:
- *    -entree : $> ls -a| wc -e>> file
- *    -sortie : tableau[0] = ls, tableau[1] = -a, tableau[2] = |, tableau[3] = wc, tableau[4] = -e,
- *              tableau[5] = >>, tableau[6] = file, tableau[7] = NULL
- *
- *  argument(s) : "line" pour recuperer la ligne sur stdin (ne peut etre NULL)
- *                "delim" --> tableau de deux dimensions devant se terminer par un element NULL ou
- *                      chaque case est un delimiteur!!!
- *
- *  returns: retourne un tableau 2d formatté
- */
 
 char **split_command(char *line, char **delim)
 {
@@ -115,3 +131,15 @@ char **split_command(char *line, char **delim)
     return (formatted_array);
 }
 
+int main(int ac, char **av)
+{
+    char *line = "wc      \"-c ||ls\" -l>file  &>fichier";
+    char **spliter = split_command(line, (char **)delim);
+    int i = 0;
+    while (spliter[i])
+    {
+        printf("element : %d vaut %s\n",i,spliter[i]);
+        i++;
+    }
+    return(0);
+}
