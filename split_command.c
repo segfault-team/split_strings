@@ -19,6 +19,26 @@ static int ft_isquote(int c)
     return 0;
 }
 
+int	ft_isprint_special(int c)
+{
+    if (c == 33)
+        return (1);
+    if (c >= 35 && c <= 37)
+        return (1);
+    if (c >= 39 && c <= 59)
+        return (1);
+    if (c == 61)
+        return (1);
+    if (c >= 63 && c <= 64)
+        return (1);
+    return (0);
+}
+
+int ft_isalnum_isprint_special(int c)
+{
+    return (ft_isalnum(c) || ft_isprint_special(c));
+}
+
 static int counter_argument(char *line, char **delim)
 {
     int i = 0;
@@ -40,7 +60,7 @@ static int counter_argument(char *line, char **delim)
             }
             i++;
         }
-        while(ft_isalnum(*line) || *line == '-' || (delim[i] && *line == delim[i][0]))
+        while(ft_isalnum_isprint_special(*line) || *line == '-' || (delim[i] && *line == delim[i][0]))
         {
             line++;
             must_increment = 1;
@@ -99,7 +119,7 @@ static char *cut_word_by_delim(char **str, char **delim)
         }
         len++;
     }
-    while (str[0][i] && ((ft_isalnum(str[0][i]) || str[0][i] == '-') ||
+    while (str[0][i] && ((ft_isalnum_isprint_special(str[0][i]) || str[0][i] == '-') ||
                          (delim[len] && (str[0][i] == delim[len][0]))))
         i++;
     dup = ft_strsub(str[0], 0, i);
