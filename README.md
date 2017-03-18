@@ -19,7 +19,7 @@ Retourne un tableau 2d formatté
 ```c
 #include <split_command.h>
 
-const char *delim[] = {">>", "<<", ">", "<", "||", "|", "&&", "&>", ">&", "1>&2", ">&2", "2>&1", NULL};
+const char *delim[] = {"1>&2", ">&2", "2>&1", ">>", "<<", ">", "<", "||", "|", "&&", "&>", ">&", NULL};
 
 int main(int ac, char **av)
 {
