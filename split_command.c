@@ -39,12 +39,13 @@ int ft_isalnum_isprint_special(int c)
     return (ft_isalnum(c) || ft_isprint_special(c));
 }
 
-static int counter_argument(char *line, char **delim)
+int counter_argument(char *line, char **delim)
 {
-    int i = 0;
-    int counter = 0;
-    int must_increment = 0;
+    int i;
+    int counter;
     
+    i = 0;
+    counter = 0;
     while(*line)
     {
         while(*line == ' ')
@@ -60,14 +61,15 @@ static int counter_argument(char *line, char **delim)
             }
             i++;
         }
-        while(ft_isalnum_isprint_special(*line) || *line == '-' || (delim[i] && *line == delim[i][0]))
+        if(ft_isalnum_isprint_special(*line))
         {
-            line++;
-            must_increment = 1;
+            while(ft_isalnum_isprint_special(*line))
+                line++;
+            counter++;
         }
-        if(ft_isquote(*line))
+        else if(ft_isquote(*line))
         {
-            must_increment = 1;
+            counter++;
             while(*line++)
             {
                 if(*line == '\"')
@@ -77,10 +79,7 @@ static int counter_argument(char *line, char **delim)
                 }
             }
         }
-        if(must_increment == 1)
-            counter++;
         i = 0;
-        must_increment = 0;
     }
     return (counter);
 }
