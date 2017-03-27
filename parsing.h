@@ -17,6 +17,6 @@
 #include <stdlib.h>
 #include "libft.h"
 
-char **split_command(char *line, char **delim);
+char *split_command(char *line, char **delim);
 
 #endif /* parsing_h */

@@ -149,16 +149,15 @@ void	join_and_delete(char **dest, char *to_join)
 
 void	copy_array_in_str(char **str, char **array)
 {
-	char	*del;
 	int	i;
 
 	i = 0;
 	while (array[i])
 	{
 		join_and_delete(str, array[i]);
+		i++;
 		if (array[i])
 			join_and_delete(str, " ");
-		i++;
 	}
 }
 
@@ -194,5 +193,6 @@ char *split_command(char *line, char **delim)
     }
     formatted_array[i] = NULL;
     formatted_string = make_str_from_array(formatted_array);
+    erase_char_array(formatted_array);
     return (formatted_string);
 }
